@@ -12,6 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
    TextView resultTV, solutionTV;
@@ -111,7 +114,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         solutionTV.setText(dataToCalculate);
 
-        //String finalResult = getResults();
+        String finalResult = getResults(dataToCalculate);
+        if(!finalResult.equals("Error")){
+            resultTV.setText(finalResult);
+        }
 
+    }
+
+    String getResults(String data){
+        try{
+            Context context = Context.enter();
+            context.setOptimizationLevel(-1);
+            Scriptable scriptable = context.initStandardObjects();
+            return context.evaluateString(scriptable, data, "Javascript", 1, null).toString();
+
+        } catch (Exception e){
+            return "Error";
+        }
     }
 }
