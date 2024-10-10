@@ -17,18 +17,36 @@ import org.mozilla.javascript.Scriptable;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Two text views for the result and the solution.
+     */
    TextView resultTV, solutionTV;
 
+    /**
+     * Three buttons to clear a single character, input an open parenthesis,
+     * and input a close parenthesis.
+     */
    MaterialButton buttonC, buttonParOpen, buttonParClose;
 
+   /**
+     * Ten buttons to input the digits 0 through 9.
+     */
    MaterialButton button0, button1, button2, button3,
            button4, button5, button6, button7, button8,  button9;
 
+    /**
+     * Five buttons for the multiplication, division, addition, subtraction, and equals
+     * operations.
+     */
    MaterialButton buttonMul, buttonDivide, buttonPlus, buttonMinus, buttonEquals;
 
+    /**
+     * Two buttons for the clear all function and the decimal function.
+     */
    MaterialButton buttonAC, buttonDot;
 
     /**
+     * This method creates the text views and assigns id's to the buttons.
      *
      * @param savedInstanceState If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
@@ -78,9 +96,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     /**
+     * This method takes a button and finds the id to be assigned to it.
      *
-     * @param btn
-     * @param id
+     * @param btn The button to have its id assigned.
+     * @param id The id to be assigned to the button.
      */
     void assignID(MaterialButton btn, int id){
         btn = findViewById(id);
@@ -88,6 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * This method clears the text views if the AC button is clicked, clears the last
+     * input character from the text view when the C button is clicked, performs
+     * the equals operation when the = button is clicked and adds all input characters
+     * to the text view when buttons are clicked.
      *
      * @param view The view that was clicked.
      */
@@ -121,12 +144,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * This method returns the data from the calculator.
+     *
+     * @param data the data from the calculator.
+     * @return Return the results of the calculation.
+     */
     String getResults(String data){
         try{
             Context context = Context.enter();
             context.setOptimizationLevel(-1);
             Scriptable scriptable = context.initStandardObjects();
-            return context.evaluateString(scriptable, data, "Javascript", 1, null).toString();
+            return context.evaluateString(scriptable, data, "Javascript",
+                    1, null).toString();
 
         } catch (Exception e){
             return "Error";
